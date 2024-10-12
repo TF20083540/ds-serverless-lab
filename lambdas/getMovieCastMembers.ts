@@ -30,10 +30,17 @@ export const handler: APIGatewayProxyHandlerV2 = async (event, context) => {
         body: JSON.stringify({ message: "Missing movie Id parameter" }),
  };
  }
+
     const movieId = parseInt(queryParams?.movieId);
     let commandInput: QueryCommandInput = {
       TableName: process.env.CAST_TABLE_NAME,
  };
+    //I think a new command is due here? Maybe?
+    let movieInput: QueryCommandInput = {
+      TableName: process.env.MOVIE_TABLE_NAME,
+    }
+
+
     if ("roleName" in queryParams) {
       commandInput = {
  ...commandInput,
@@ -53,7 +60,18 @@ export const handler: APIGatewayProxyHandlerV2 = async (event, context) => {
           ":a": queryParams.actorName,
  },
  };
- } else {
+ } else if ("facts" in queryParams) { //The new else if statement for "facts" is experimental.
+      movieInput = { //Maybe, just maybe?
+...movieInput,
+    KeyConditionExpression: "movieId = :m and begins_with(facts=true)",
+    ExpressionAttributeValues: {
+      ":m": movieId,
+      //":f": queryParams.movieId, //this should be used for getMovieById
+    },
+  }; //Note, I genuinely do not see how data is supposed to be gotten from one table to the other and then deconstructed and returned with the rest. Will ask in class on monday.
+
+}
+ else {
       commandInput = {
  ...commandInput,
         KeyConditionExpression: "movieId = :m",

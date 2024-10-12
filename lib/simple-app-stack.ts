@@ -5,8 +5,6 @@ import * as dynamodb from "aws-cdk-lib/aws-dynamodb";
 import * as custom from "aws-cdk-lib/custom-resources";
 import { generateBatch } from "../shared/util";
 import { movies, movieCasts } from "../seed/movies";
-
-
 import { Construct } from 'constructs';
 
 export class SimpleAppStack extends cdk.Stack {
@@ -50,17 +48,6 @@ export class SimpleAppStack extends cdk.Stack {
       indexName: "roleIx",
       sortKey: { name: "roleName", type: dynamodb.AttributeType.STRING },
  });
-
-
-
-
-
-
-
-
-
-
-
 
 
     //This is for the getMovieByID() function, relating to ./lambas/getMovieByID.ts
@@ -113,6 +100,8 @@ export class SimpleAppStack extends cdk.Stack {
     });
     //End function declarations for getAllMovies() functions.
 
+
+
     //Lambda function for movieCastMembers
     const getMovieCastMembersFn = new lambdanode.NodejsFunction(
       this,
@@ -125,6 +114,7 @@ export class SimpleAppStack extends cdk.Stack {
         memorySize: 128,
         environment: {
           CAST_TABLE_NAME: movieCastsTable.tableName,
+          MOVIE_TABLE_NAME: moviesTable.tableName, //Gotta add this to the function? + the permissions down below.
           REGION: "eu-west-1",
  },
  }
@@ -145,6 +135,7 @@ export class SimpleAppStack extends cdk.Stack {
     moviesTable.grantReadData(getMovieByIdFn)
     moviesTable.grantReadData(getAllMoviesFn);
     movieCastsTable.grantReadData(getMovieCastMembersFn);
+    moviesTable.grantReadData(getMovieCastMembersFn); //Also gotta add this to the function?
 
 
 

@@ -1,9 +1,9 @@
 import { Handler } from "aws-lambda";
-
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, GetCommand } from "@aws-sdk/lib-dynamodb";
 // Initialization
 const ddbDocClient = createDDbDocClient();
+
 // Handler
 export const handler: Handler = async (event, context) => {
   try {

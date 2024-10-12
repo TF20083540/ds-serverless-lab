@@ -1,6 +1,5 @@
 import {Movie, MovieCast} from '../shared/types'
 
-
 export const movies : Movie[] = [
   {
     adult: false,
@@ -321,6 +320,22 @@ export const movies : Movie[] = [
     video: false,
     vote_average: 7.4,
     vote_count: 325
+  },
+  {
+    adult: false,
+    backdrop_path: '/sRLC052ieEzkQs9dEtPMfFxYkej.jpg',
+    genre_ids: [ 878 ],
+    id: 1234,
+    original_language: 'en',
+    original_title: 'TEST ORIGINAL TITLE',
+    overview: 'BLAH BLAH BLAH BLAH',
+    popularity: 2136.3,
+    poster_path: '/6epeijccmJlnfvFitfGyfT7njav.jpg',
+    release_date: '2023-12-15',
+    title: 'TEST TITLE',
+    video: false,
+    vote_average: 9.9,
+    vote_count: 999
   }
 ]
 
